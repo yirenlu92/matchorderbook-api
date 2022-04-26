@@ -9,6 +9,7 @@ servers:
 paths:
   /api/v1/takeorder:
     post:
+      summary: Take an order
       description: Take an order
       parameters:
       - name: id
@@ -40,6 +41,7 @@ paths:
     - url: http://47.241.125.101:8080
   /api/v1/orders:
     get:
+      summary: Get all fresh orders
       description: Get all fresh orders
       parameters:
       - name: pagesize
@@ -79,6 +81,7 @@ paths:
     - url: http://47.241.125.101:8080
   /api/v1/accountwithdrawed:
     get:
+      summary: Get history of withdrawals
       description: Get history of withdrawals
       parameters:
       - name: chainid
