@@ -1,12 +1,7 @@
----
 openapi: 3.1.0
 info:
   title: MEP Orderbook API
   version: "0.2"
-  # x-logo:
-  #   url: 'https://redocly.github.io/openapi-template/logo.png'
-  # description:
-  #   $ref: ./info-description.md
 servers:
 - url: http://47.241.125.101:8080
 paths:
