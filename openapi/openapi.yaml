@@ -1,8 +1,8 @@
 ---
 openapi: 3.0.1
 info:
-  title: Match Orderbook API
-  description: API to interact with Match Orderbook
+  title: MEP Orderbook API
+  description: API to interact with MEP Orderbook
   version: "0.2"
 servers:
 - url: http://47.241.125.101:8080
