@@ -5,8 +5,8 @@ info:
   version: "0.2"
   x-logo:
     url: 'https://redocly.github.io/openapi-template/logo.png'
-  description:
-    $ref: ./info-description.md
+  # description:
+  #   $ref: ./info-description.md
 servers:
 - url: http://47.241.125.101:8080
 paths:
