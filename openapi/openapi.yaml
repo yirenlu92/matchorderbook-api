@@ -129,6 +129,7 @@ paths:
     - url: http://47.241.125.101:8080
   /api/v1/order:
     get:
+      summary: Get a single order
       description: Get a single order
       parameters:
       - name: id
@@ -207,6 +208,7 @@ paths:
     - url: http://47.241.125.101:8080
   /api/v1/accountwithdraws:
     get:
+      summary: Get the token info that can be withdrawn by one taker
       description: Get the token info that can be withdrawn by one taker
       parameters:
       - name: chainid
@@ -238,6 +240,7 @@ paths:
     - url: http://47.241.125.101:8080
   /api/v1/withdrawall:
     post:
+      summary: Withdraw the entirety of one token on one chain
       description: Withdraw the entirety of one token on one chain
       parameters:
       - name: chainid
