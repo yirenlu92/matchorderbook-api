@@ -153,6 +153,7 @@ paths:
     - url: http://47.241.125.101:8080
   /api/v1/accountorders:
     get:
+      summary: Get orders of a specific account with specified status
       description: Get orders of a specific account with specified status
       parameters:
       - name: role
