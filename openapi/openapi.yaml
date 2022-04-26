@@ -1,55 +1,526 @@
-openapi: 3.1.0
+---
+openapi: 3.0.1
 info:
-  version: 1.0.0
-  title: Example.com
-  termsOfService: 'https://example.com/terms/'
-  contact:
-    email: contact@example.com
-    url: 'http://example.com/contact'
-  license:
-    name: Apache 2.0
-    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
-  x-logo:
-    url: 'https://redocly.github.io/openapi-template/logo.png'
-  description:
-    $ref: ./info-description.md
-tags:
-  - name: Echo
-    description: Example echo operations.
-  - name: User
-    description: Operations about users.
-  - name: Tag
-    description: This is a tag description.
+  title: Match Orderbook API
+  description: API to interact with Match Orderbook
+  version: "0.2"
 servers:
-  - url: 'https://{tenant}/api/v1'
-    variables:
-      tenant:
-        default: www
-        description: Your tenant id
-  - url: 'https://example.com/api/v1'
+- url: http://47.241.125.101:8080
 paths:
-  '/users/{username}':
-    $ref: 'paths/users_{username}.yaml'
-  /echo:
-    $ref: paths/echo.yaml
-  /pathItem:
-    $ref: paths/path-item.yaml
-  /pathItemWithExamples:
-    $ref: paths/path-item-with-examples.yaml
+  /api/v1/takeorder:
+    post:
+      description: Take an order
+      parameters:
+      - name: id
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: "320285027072"
+      - name: taker
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 0x59728544b08ab483533076417fbbb2fd0b17ce3a
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/takenOrderResp'
+      servers:
+      - url: http://47.241.125.101:8080
+    servers:
+    - url: http://47.241.125.101:8080
+  /api/v1/orders:
+    get:
+      description: Get all fresh orders
+      parameters:
+      - name: pagesize
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: "10"
+      - name: page
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: "1"
+      - name: status
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: "1"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+      servers:
+      - url: http://47.241.125.101:8080
+    servers:
+    - url: http://47.241.125.101:8080
+  /api/v1/accountwithdrawed:
+    get:
+      description: Get history of withdrawals
+      parameters:
+      - name: chainid
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: "42"
+      - name: pagesize
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: "10"
+      - name: page
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: "1"
+      - name: account
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 0xc365603269857e4FFe52072ffD8e39B9286DBB67
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountWithdrawedResponse'
+      servers:
+      - url: http://47.241.125.101:8080
+    servers:
+    - url: http://47.241.125.101:8080
+  /api/v1/order:
+    get:
+      description: Get a single order
+      parameters:
+      - name: id
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: "320285027072"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_1'
+      servers:
+      - url: http://47.241.125.101:8080
+    servers:
+    - url: http://47.241.125.101:8080
+  /api/v1/accountorders:
+    get:
+      description: Get orders of a specific account with specified status
+      parameters:
+      - name: role
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: "1"
+      - name: pagesize
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: "10"
+      - name: page
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: "1"
+      - name: account
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 0x18041866663b077bB6BF2bAFFAeA2451a2472ed7
+      - name: status
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: "1"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+      servers:
+      - url: http://47.241.125.101:8080
+    servers:
+    - url: http://47.241.125.101:8080
+  /api/v1/accountwithdraws:
+    get:
+      description: Get the token info that can be withdrawn by one taker
+      parameters:
+      - name: chainid
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: "42"
+      - name: account
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 0xc365603269857e4FFe52072ffD8e39B9286DBB67
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountWithdrawResponse'
+      servers:
+      - url: http://47.241.125.101:8080
+    servers:
+    - url: http://47.241.125.101:8080
+  /api/v1/withdrawall:
+    post:
+      description: Withdraw the entirety of one token on one chain
+      parameters:
+      - name: chainid
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: "42"
+      - name: taker
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 0xc365603269857e4FFe52072ffD8e39B9286DBB67
+      - name: token
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: 0x919BE0D40f5fc42E3CBf7A7F6454D9D33C82091d
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WithdrawAllResp'
+      servers:
+      - url: http://47.241.125.101:8080
+    servers:
+    - url: http://47.241.125.101:8080
 components:
-  securitySchemes:
-    main_auth:
-      type: oauth2
-      flows:
-        implicit:
-          authorizationUrl: 'http://example.com/api/oauth/dialog'
-          scopes:
-            'read:users': read users info
-            'write:users': modify or remove users
-    api_key:
-      type: apiKey
-      in: header
-      name: api_key
-    basic_auth:
-      type: http
-      scheme: basic
+  schemas:
+    takenOrderResp:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/takenOrderResp_data'
+        signature:
+          type: string
+          example: "50717356474101539281411003340926665964478559274554274915938581139234637679386125266701502695722075873303607987123303633186075108392501144593249478369430785"
+      description: takenOrderResponse
+    WithdrawAllResp:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/WithdrawAllResp_data'
+        signature:
+          type: string
+          example: "1393688194144406628359572698181320969923104926434627123937575215912781957097714578944654159388209254815363258513757833165599124033803217830497138465372111360"
+      description: WithdrawAllResp
+    AccountWithdrawResponse:
+      type: object
+      properties:
+        tokens:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountWithdrawResponse_tokens'
+      description: AccountWithdrawResponse
+    AccountWithdrawedResponse:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+          example: 1
+        withdrawed:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountWithdrawedResponse_withdrawed'
+      description: AccountWithdrawedResponse
+    Order:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          example: 37
+        created_on:
+          type: integer
+          format: int32
+          example: 1650035419
+        modified_on:
+          type: integer
+          format: int32
+          example: 1650664869
+        global_order_id:
+          type: integer
+          format: int64
+          example: 320285027072
+        chain_id:
+          type: integer
+          format: int32
+          example: 4
+        order_id_on_chain:
+          type: integer
+          format: int32
+          example: 9
+        to_chain_id:
+          type: integer
+          format: int32
+          example: 42
+        status:
+          type: integer
+          format: int32
+          example: 1
+        sender:
+          type: string
+          example: "137107107020117812119007959787568732992960933591"
+        receiver:
+          type: string
+          example: "137107107020117812119007959787568732992960933591"
+        matching_address:
+          type: string
+        token_address:
+          type: string
+          example: "1071959604542811644731311396817222576896399980930"
+        receive_token_address:
+          type: string
+          example: "831279862587575146288859918603207292563151259933"
+        amount:
+          type: string
+          example: "1000000000000000000"
+        incentive:
+          type: string
+          example: "30000000000000000"
+        decimal:
+          type: integer
+          format: int32
+          example: 18
+        tx_hash:
+          type: string
+          example: "7165014005584653827747307319309774644251481052004428694162138696524180788126"
+        taker:
+          type: string
+        token_symbol:
+          type: string
+          example: TEST
+        Deadline:
+          type: integer
+          format: int32
+          example: 0
+      description: Order
+    inline_response_200:
+      type: object
+      properties:
+        orders:
+          type: array
+          items:
+            $ref: '#/components/schemas/Order'
+        total:
+          type: integer
+          format: int32
+          example: 14
+    inline_response_200_1:
+      type: object
+      properties:
+        order:
+          $ref: '#/components/schemas/Order'
+    takenOrderResp_data:
+      type: object
+      properties:
+        ChainId:
+          type: integer
+          format: int32
+          example: 4
+        OrderIdOnChain:
+          type: integer
+          format: int32
+          example: 9
+        ToChain:
+          type: integer
+          format: int32
+          example: 42
+        Sender:
+          type: string
+          example: "137107107020117812119007959787568732992960933591"
+        Receiver:
+          type: string
+          example: "137107107020117812119007959787568732992960933591"
+        Taker:
+          type: string
+          example: "510654072863848408894491182710321743707646709306"
+        FromToken:
+          type: string
+          example: "1071959604542811644731311396817222576896399980930"
+        ReceiveToken:
+          type: string
+          example: "831279862587575146288859918603207292563151259933"
+        Nonce:
+          type: integer
+          format: int32
+          example: 79
+        Deadline:
+          type: integer
+          format: int32
+          example: 1650664869
+        Amount:
+          type: string
+          example: "1000000000000000000"
+        Incentive:
+          type: string
+          example: "30000000000000000"
+        Status:
+          type: integer
+          format: int32
+          example: 1
+      example: null
+    WithdrawAllResp_data:
+      type: object
+      properties:
+        ChainId:
+          type: integer
+          format: int32
+          example: 42
+        AllOrderIds:
+          type: array
+          items:
+            type: integer
+            format: int32
+            example: 0
+        Taker:
+          type: string
+          example: "510654072863848408894491182710321743707646709306"
+        Token:
+          type: string
+          example: "831279862587575146288859918603207292563151259933"
+        Nonce:
+          type: integer
+          format: int32
+          example: 1
+        TotalAmount:
+          type: string
+          example: "110000000000000000"
+        Status:
+          type: integer
+          format: int32
+          example: 1
+      example: null
+    AccountWithdrawResponse_tokens:
+      type: object
+      properties:
+        Symbol:
+          type: string
+        LogoURL:
+          type: string
+        TokenAddr:
+          type: string
+          example: "831279862587575146288859918603207292563151259933"
+        Amount:
+          type: integer
+          format: int64
+          example: 1100000000000
+      example: null
+    AccountWithdrawedResponse_withdrawed:
+      type: object
+      properties:
+        Symbol:
+          type: string
+        LogoURL:
+          type: string
+        TokenAddr:
+          type: string
+          example: "831279862587575146288859918603207292563151259933"
+        Amount:
+          type: string
+          example: "10000000000000000000"
+        CreatedAt:
+          type: integer
+          format: int32
+          example: 1647362214
+        FinishedAt:
+          type: integer
+          format: int32
+          example: 1647362235
+        Status:
+          type: integer
+          format: int32
+          example: 2
+        TxHash:
+          type: string
+          example: "91662751562726112608889419890063441026429217883485300017593077041492957586787"
+      example: null
