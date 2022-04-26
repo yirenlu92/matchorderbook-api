@@ -2,18 +2,11 @@
 openapi: 3.0.1
 info:
   title: MEP Orderbook API
-  description:
-    $ref: ./info-description.md
   version: "0.2"
-  termsOfService: 'https://example.com/terms/'
-  contact:
-    email: contact@example.com
-    url: 'http://example.com/contact'
-  license:
-    name: Apache 2.0
-    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
   x-logo:
     url: 'https://redocly.github.io/openapi-template/logo.png'
+  description:
+    $ref: ./info-description.md
 servers:
 - url: http://47.241.125.101:8080
 paths:
